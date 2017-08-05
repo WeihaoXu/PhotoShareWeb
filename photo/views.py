@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login, logout
 #from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, LoginForm
@@ -11,7 +11,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-	context = {'login_out': 'login'}
+	context = {'user': request.user} 
 	return render(request, 'photo/index.html', context)
 
 def signup(request):
@@ -25,14 +25,18 @@ def signup(request):
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=user.username, password=raw_password)
 			login(request, user)
-			return render(request, 'photo/index.html', {'login_out': user.username})
+			context = {
+				'user': request.user 
+			}
+			return render(request, 'photo/index.html', context)
 	else:
 		form = SignUpForm()
 		context = {
 			'form': form,
-			'login_out': "sf",	
-			}
+			'user': request.user	
+		}
 		return render(request, 'photo/signup.html', context)
+		#return HttpResponse("sign up request get")
 
 	
 class Login(View):
@@ -43,7 +47,7 @@ class Login(View):
 		if(user is not None):
 			if(user.is_active):
 				login(request, user)  # login() saves the user's ID in the session, using Django's session framework.
-				return render(request, 'photo/index.html', {'login_out': username})
+				return render(request, 'photo/index.html', {'user': request.user})
 			else:
 				return HttpResponse('disabled account!')
 		else:
@@ -53,10 +57,15 @@ class Login(View):
 	def get(self, request):
 		form = AuthenticationForm() 
 		context = {
-			'login_out': '',
+			'user': request.user, 
 			'form': form
 		}
 		return render(request, 'photo/login.html', context)
+
+class Logout(View):
+	def get(self, request):
+		logout(request);
+		return redirect('index')
 		
 	
 
