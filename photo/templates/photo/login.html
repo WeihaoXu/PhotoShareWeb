@@ -1,0 +1,16 @@
+{% extends 'photo/base.html' %}
+
+{% block title %}
+<title> login </title>
+{% endblock %}
+
+
+{% block content %}
+
+<form method = 'post' action = {% url 'login' %}>
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type='submit'> Login </button>
+</form>
+
+{% endblock %}
