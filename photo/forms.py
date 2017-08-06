@@ -7,9 +7,9 @@ class SignUpForm(UserCreationForm):
 	birth_date = forms.DateField(help_text='Format: YYY-MM-DD')
 	class Meta:
 		model = User
-		fields = ('username', 'birth_date', 'password1', 'password2',)
+		fields = ('username', 'birth_date', 'password1', 'password2', 'email')
 
-# meant to create user login form by myself. However, there is existing AuthenticationFrom and I can just use that for login. 
+# As for login form: meant to create user login form by myself. However, there is existing AuthenticationFrom and I can just use that for login. 
 # See doc at: https://docs.djangoproject.com/en/1.8/modules/django/contrib/auth/forms/
 
 class LoginForm(forms.Form):

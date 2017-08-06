@@ -28,3 +28,11 @@ def update_user_profile(sender, instance, created, **kwargs):
 		Profile.objects.create(user=instance)
 	instance.profile.save()
 
+class Stream{
+	
+	
+
+
+
+}
+

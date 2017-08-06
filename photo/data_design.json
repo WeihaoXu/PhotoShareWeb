@@ -1,0 +1,39 @@
+{
+
+"Stream":{
+	"Name":{},
+	"description":{},
+	"date":{},
+	"last_update":{},
+	"Owner":{"many to one"},
+	"subscribers":{"many to many"},
+	"photos":{"one to many"},
+	"view_count":{},
+	"comments":{}
+},
+
+"photo":{
+	"Name":{},
+	"description":{},
+	"date":{},
+	"owner":{},
+	"data":{"dont' know what type for image data"},
+	"view_count":{},
+	"comments":{"one to many"}
+},
+
+"comments":{
+	"text":{},
+	"owner":{"one to many"},
+	"date":{}
+
+
+}
+
+
+
+
+
+
+
+}
