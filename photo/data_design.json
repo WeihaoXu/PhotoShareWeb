@@ -1,4 +1,9 @@
 {
+"relationships":{
+	"0": "ForeignKey(many to one)",
+	"1": "OneToOne",
+	"2": "ManyToMnay"
+},
 
 "Stream":{
 	"Name":{},
