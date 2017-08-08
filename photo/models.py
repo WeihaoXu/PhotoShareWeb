@@ -39,10 +39,12 @@ class Stream(models.Model):
 	subscribers = models.ManyToManyField(User, related_name='stream_subscribers' )
 
 class Photo(models.Model):
+	def Photo(self, data):
+		self.data = data
 	name = models.CharField(max_length=30, blank=True) #name optional
 	description = models.TextField(max_length=500, blank=True)
 	create_date = models.DateField(auto_now_add=True)
-	stream_belong = models.ForeignKey(Stream, on_delete=models.CASCADE)
+	stream_belong = models.ForeignKey(Stream, on_delete=models.CASCADE, blank=True, null=True)
 	data = models.ImageField(upload_to = 'imgs/', null=False, blank=False)
 
 class Comments(models.Model):

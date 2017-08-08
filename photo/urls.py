@@ -8,4 +8,5 @@ urlpatterns = [
 	url(r'^signup/', views.signup, name='signup'),
 	url(r'^login/',  views.Login.as_view(), name='login'),
 	url(r'^logout/', views.Logout.as_view(), name='logout'),
+	url(r'^upload/', views.UploadImg.as_view(), name='upload'),
 ]

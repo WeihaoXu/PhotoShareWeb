@@ -1,0 +1,25 @@
+{% extends 'photo/base.html' %}
+
+{% block title %}
+<title> upload img </title>
+{% endblock %}
+
+{% block content %}
+<form method = 'post' action={% url 'upload' %} enctype='multipart/form-data'>
+	{% csrf_token %}
+	{% for field in form %}
+		<p>
+			{{ field.label_tag }} <br>
+			{{field}}
+			{% if  field.help_text %}
+			<div style="color:grey">{{field.help_text}} </div>
+			{% endif %}
+
+			{% for error in field.errors %}
+				<p style="color: red"> {{ error }} </p>
+			{% endfor %}
+		</p>
+	{% endfor %}
+	<input type='submit' value='submit'/>
+
+{% endblock %}}

@@ -2,5 +2,6 @@
 **/*.pyc
 **/**/*.pyc
 **/**/**/*.pyc
+media/*
 
 worklog
