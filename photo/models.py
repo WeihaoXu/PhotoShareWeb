@@ -30,6 +30,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class Stream(models.Model):
+	cover_img = models.ImageField(upload_to='cover_imgs/', blank=True) 
 	name = models.CharField(max_length=30, blank=False) #blank is default false
 	description = models.TextField(max_length=500, blank=True)
 	create_date = models.DateField(auto_now_add=True) 
@@ -44,8 +45,9 @@ class Photo(models.Model):
 	name = models.CharField(max_length=30, blank=True) #name optional
 	description = models.TextField(max_length=500, blank=True)
 	create_date = models.DateField(auto_now_add=True)
+	update_date = models.DateField(auto_now=True)
 	stream_belong = models.ForeignKey(Stream, on_delete=models.CASCADE, blank=True, null=True)
-	data = models.ImageField(upload_to = 'imgs/', null=False, blank=False)
+	data = models.ImageField(upload_to = 'imgs/', blank=False)
 
 class Comments(models.Model):
 	text = models.TextField(max_length=500, blank=False)

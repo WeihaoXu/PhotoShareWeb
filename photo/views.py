@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 from django.views import View # most basic view
 from django.http import HttpResponse
 from .models import Photo
+from .helper_funcs import validate_user, rename_form_attr
 
 
 
@@ -30,6 +31,7 @@ def signup(request):
 				'user': request.user 
 			}
 			return render(request, 'photo/index.html', context)
+		return HttpResponse('form invalid')
 	else:
 		form = SignUpForm()
 		context = {
@@ -70,19 +72,36 @@ class Logout(View):
 
 class UploadImg(View):
 	def get(self, request):
+		print ('upload request get')
+		if(not validate_user(request)):
+			return redirect('login') 
 		form = UploadImgForm();
+		rename_form_attr(form)
 		context = {
 			'user': request.user,
-			'form': form
+			'form': form,
 		}
+		print('gotta render upload page')
 		return render(request, 'photo/upload_img.html', context);
+
 	def post(self, request):
+		if(not validate_user(request)):
+			return HttpResponse('not logged error!')	
 		form = UploadImgForm(request.POST, request.FILES)
 		if(form.is_valid()):
-			photo = Photo(data = request.FILES['data'])
+			photo = Photo(data = request.FILES['Image'])
 			photo.name = request.POST['name']
 			photo.save()
-		return redirect('index')
+		return HttpResponse('photo upload successful') 
+
+#class CreateStream(request):
+#	def get(request):
+#		if(not validate_user(request)):
+#			return redirect('login')
+		
+		
+		
+	
 
 		
 

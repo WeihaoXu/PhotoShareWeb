@@ -21,7 +21,11 @@ class LoginForm(forms.Form):
 class UploadImgForm(forms.ModelForm):
 	class Meta:
 		model = models.Photo
-		fields = ('name', 'data')
+		fields = ('name', 'description', 'data')
+		field_map = {'name': 'Name',
+			'description': 'Description', 
+			'data': 'Image'
+		}
 
 
 
