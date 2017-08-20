@@ -18,17 +18,35 @@ class LoginForm(forms.Form):
 	password = forms.CharField(max_length=254)
 
 
+
+class CreateStreamForm(forms.Form):
+	name = forms.CharField(max_length=30)
+	name.html_name = "who's your dad"
+	description = forms.CharField(widget=forms.Textarea)
+	cover = forms.ImageField()
+
+
+
+
 class UploadImgForm(forms.ModelForm):
+	name = forms.CharField(max_length=30)
+	name.html_name = "who's your dad"
+	description = forms.CharField(max_length=500)
+	photo = forms.ImageField()
+
+	
+	
+
+
+
+
+
+'''
+class CreateStreamForm(forms.ModelForm):
 	class Meta:
-		model = models.Photo
-		fields = ('name', 'description', 'data')
-		field_map = {'name': 'Name',
-			'description': 'Description', 
-			'data': 'Image'
-		}
-
-
-
+		model = models.Stream;
+		fields = ('name', 'cover_img', 'description')
+'''
 
 
 

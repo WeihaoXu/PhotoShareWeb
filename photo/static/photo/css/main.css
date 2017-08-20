@@ -1,0 +1,27 @@
+#welcome-page-body{
+	margin: 0;
+	padding: 0;
+	background: url(http://s1.picswalls.com/wallpapers/2015/12/12/beautiful-backgrounds_12441478_294.jpg);
+	background-size: 100%;
+}
+
+
+.welcome-buttons{
+	position: absolute;
+	top: 45%;
+	left: 45%;
+	text-align: center;
+}
+
+.welcome-btn{
+	background-color: transparent;
+	width: 150;
+	height: 30px;
+	margin: 10px;
+
+
+}
+
+
+
+
