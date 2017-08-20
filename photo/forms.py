@@ -20,17 +20,15 @@ class LoginForm(forms.Form):
 
 
 class CreateStreamForm(forms.Form):
-	name = forms.CharField(max_length=30)
-	name.html_name = "who's your dad"
+	name = forms.CharField(max_length=254)
 	description = forms.CharField(widget=forms.Textarea)
 	cover = forms.ImageField()
 
 
 
 
-class UploadImgForm(forms.ModelForm):
-	name = forms.CharField(max_length=30)
-	name.html_name = "who's your dad"
+class UploadImgForm(forms.Form):
+	name = forms.CharField(max_length=254)
 	description = forms.CharField(max_length=500)
 	photo = forms.ImageField()
 

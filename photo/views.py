@@ -6,8 +6,10 @@ from .forms import SignUpForm, LoginForm, UploadImgForm, CreateStreamForm
 from django.views.generic import TemplateView
 from django.views import View # most basic view
 from django.http import HttpResponse
-from .models import Photo
+from django.utils import timezone
+from .models import Photo, Stream
 from .helper_funcs import validate_user
+
 
 
 
@@ -16,7 +18,12 @@ def index(request):
 
 
 def home(request):
-	context = {'user': request.user} 
+	streams = Stream.objects.all()	
+	context = {
+		'user': request.user,
+		'streams': streams,
+		
+	} 
 	return render(request, 'photo/home.html', context)
 
 class Signup(View):
@@ -43,25 +50,6 @@ class Signup(View):
 		}
 		return render(request, 'photo/signup.html', context)
 		#return HttpResponse("sign up request get")
-
-
-class CreateStream(View):
-	def get(self, request):
-		if(not request.user.is_authenticated):
-			return redirect('login')	
-
-
-		create_stream_home = CreateStreamForm()
-		context = {
-			"user": request.user,
-			"form": create_stream_home,	
-			}
-		return render(request, 'photo/create_stream.html', context)
-
-
-	def post(self, request):
-		return
-		
 
 
 	
@@ -94,6 +82,35 @@ class Logout(View):
 	def get(self, request):
 		logout(request);
 		return redirect('index')
+
+class CreateStream(View):
+	def get(self, request):
+		if(not validate_user(request)):
+			return redirect('login')	
+
+
+		create_stream_home = CreateStreamForm()
+		context = {
+			"user": request.user,
+			"form": create_stream_home,	
+		}
+		return render(request, 'photo/create_stream.html', context)
+
+
+	def post(self, request):
+		if(not validate_user(request)):
+			return HttpResponse("user authentication faild");
+		form = CreateStreamForm(request.POST, request.FILES)
+		if(form.is_valid()):
+			print(form.cleaned_data)
+			name = form.cleaned_data['name']
+			cover = form.cleaned_data['cover']
+			description = form.cleaned_data['description']
+			stream = Stream(name=name, cover_img=cover, owner=request.user, description=description)
+			stream.save()
+			return redirect('home')
+		else:
+			return HttpResponse("create stream form invalid!")
 
 class UploadImg(View):
 	def get(self, request):

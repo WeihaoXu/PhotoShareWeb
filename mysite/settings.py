@@ -136,7 +136,6 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'photo/static'),
 )
-print(STATICFILES_DIRS)
 
 
 

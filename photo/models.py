@@ -30,19 +30,23 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class Stream(models.Model):
+	def Stream(name, cover_img, owner, description = ""):
+		self.name = name
+		self.cover_img = cover_img
+		self.owner = owner
 	cover_img = models.ImageField(upload_to='cover_imgs/', blank=True) 
-	name = models.CharField(max_length=30, blank=False) #blank is default false
+	name = models.CharField(max_length=50, blank=False) #blank is default false
 	description = models.TextField(max_length=500, blank=True)
 	create_date = models.DateField(auto_now_add=True) 
 	# if null==true, django will store empty values as NULL in the database. Default False
-	update_date = models.DateField(null=False, blank=False)
+	update_date = models.DateField(null=False, auto_now_add=True)
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_owner')
 	subscribers = models.ManyToManyField(User, related_name='stream_subscribers' )
 
 class Photo(models.Model):
 	def Photo(self, data):
 		self.data = data
-	name = models.CharField(max_length=30, blank=True) #name optional
+	name = models.CharField(max_length=254, blank=True) #name optional
 	description = models.TextField(max_length=500, blank=True)
 	create_date = models.DateField(auto_now_add=True)
 	update_date = models.DateField(auto_now=True)
