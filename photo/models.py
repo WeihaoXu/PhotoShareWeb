@@ -30,13 +30,15 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class Stream(models.Model):
-	def Stream(name, cover_img, owner, description = ""):
+	def Stream(name, cover_img, owner, description, is_public):
 		self.name = name
 		self.cover_img = cover_img
 		self.owner = owner
-	cover_img = models.ImageField(upload_to='cover_imgs/', blank=True) 
+		self.is_public = is_public
 	name = models.CharField(max_length=50, blank=False) #blank is default false
+	cover_img = models.ImageField(upload_to='cover_imgs/', blank=True) 
 	description = models.TextField(max_length=500, blank=True)
+	is_public = models.BooleanField(default=False) 
 	create_date = models.DateField(auto_now_add=True) 
 	# if null==true, django will store empty values as NULL in the database. Default False
 	update_date = models.DateField(null=False, auto_now_add=True)

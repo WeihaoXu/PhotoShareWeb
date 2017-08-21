@@ -16,15 +16,20 @@ from .helper_funcs import validate_user
 def index(request):
 	return render(request, 'photo/index.html')
 
-
-def home(request):
-	streams = Stream.objects.all()	
-	context = {
-		'user': request.user,
-		'streams': streams,
-		
-	} 
-	return render(request, 'photo/home.html', context)
+class Home(View):
+	def get(self, request):
+		if(not validate_user(request)):
+			return redirect('login')
+		user = request.user	
+		user_streams = Stream.objects.filter(owner=user) # shouldn't use get here. Get is to get an individual object.
+		shared_streams = Stream.objects.filter(is_public=True).exclude(owner=user)
+		context = {
+			'user': user,
+			'user_streams': user_streams,
+			'shared_streams': shared_streams,
+			
+		} 
+		return render(request, 'photo/home.html', context)
 
 class Signup(View):
 	def post(self, request):
@@ -49,7 +54,6 @@ class Signup(View):
 			'user': request.user	
 		}
 		return render(request, 'photo/signup.html', context)
-		#return HttpResponse("sign up request get")
 
 
 	
@@ -102,11 +106,11 @@ class CreateStream(View):
 			return HttpResponse("user authentication faild");
 		form = CreateStreamForm(request.POST, request.FILES)
 		if(form.is_valid()):
-			print(form.cleaned_data)
 			name = form.cleaned_data['name']
 			cover = form.cleaned_data['cover']
 			description = form.cleaned_data['description']
-			stream = Stream(name=name, cover_img=cover, owner=request.user, description=description)
+			is_public = form.cleaned_data['public']
+			stream = Stream(name=name, cover_img=cover, owner=request.user, description=description, is_public=is_public)
 			stream.save()
 			return redirect('home')
 		else:
@@ -114,7 +118,6 @@ class CreateStream(View):
 
 class UploadImg(View):
 	def get(self, request):
-		print ('upload request get')
 		if(not validate_user(request)):
 			return redirect('login') 
 		form = UploadImgForm()
@@ -133,6 +136,19 @@ class UploadImg(View):
 			photo.name = request.POST['name']
 			photo.save()
 		return HttpResponse('photo upload successful') 
+
+class Gallery(View):
+	def get(self, request, stream_id):
+		stream = Stream.objects.get(pk=stream_id)
+		"""
+		context = {
+			'user': request.user,
+			'stream': stream,
+		}
+		return render(request, 'photo/gallery.html', context=context)
+		"""
+		return HttpResponse("get stream id {0}".format(stream_id))
+
 
 
 #class CreateStream(request):
