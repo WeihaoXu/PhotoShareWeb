@@ -4,10 +4,19 @@
 <title> {{stream.name}} </title>
 {% endblock %}
 
+{% block scripts %}
+	<script type="text/javascript" src="../../static/photo/js/photo_upload.js"></script>
+{% endblock %}
+
+{% block styles %}
+	<link rel="stylesheet" href="../../static/photo/css/photo_upload.css"> 
+{% endblock %}
 
 {% block content %}
 
-
-
+	<div class="field" align="left">
+		<h3>Upload your images</h3>
+		<input type="file" id="files" name="files[]" multiple />
+	</div>
 
 {% endblock %}

@@ -140,14 +140,12 @@ class UploadImg(View):
 class Gallery(View):
 	def get(self, request, stream_id):
 		stream = Stream.objects.get(pk=stream_id)
-		"""
 		context = {
 			'user': request.user,
-			'stream': stream,
+		#	'stream': stream,
 		}
 		return render(request, 'photo/gallery.html', context=context)
-		"""
-		return HttpResponse("get stream id {0}".format(stream_id))
+		#return HttpResponse("get stream id {0}".format(stream_id))
 
 
 
