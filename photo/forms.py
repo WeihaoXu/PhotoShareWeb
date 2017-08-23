@@ -23,15 +23,15 @@ class CreateStreamForm(forms.Form):
 	name = forms.CharField(max_length=254)
 	description = forms.CharField(widget=forms.Textarea)
 	cover = forms.ImageField()
+	cover.label = "Cover Image"
 	public = forms.BooleanField()
 
 
 
-
 class UploadImgForm(forms.Form):
-	name = forms.CharField(max_length=254)
-	description = forms.CharField(max_length=500)
-	photo = forms.ImageField()
+	files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+	
+
 
 	
 	

@@ -115,7 +115,7 @@ class CreateStream(View):
 			return redirect('home')
 		else:
 			return HttpResponse("create stream form invalid!")
-
+"""
 class UploadImg(View):
 	def get(self, request):
 		if(not validate_user(request)):
@@ -136,16 +136,36 @@ class UploadImg(View):
 			photo.name = request.POST['name']
 			photo.save()
 		return HttpResponse('photo upload successful') 
+"""
 
 class Gallery(View):
 	def get(self, request, stream_id):
 		stream = Stream.objects.get(pk=stream_id)
+		stream_photos = Photo.objects.filter(stream_belong=stream) 
+		print(stream_photos)
+		upload_img_form = UploadImgForm()
 		context = {
 			'user': request.user,
-		#	'stream': stream,
+			'stream': stream,
+			'form': upload_img_form,
+			'photos': stream_photos,
 		}
 		return render(request, 'photo/gallery.html', context=context)
 		#return HttpResponse("get stream id {0}".format(stream_id))
+
+	def post(self, request, stream_id):
+		if(not validate_user(request)):
+			return redirect('login')
+		stream = Stream.objects.get(pk=stream_id)
+		for myfile in request.FILES.getlist('files'):
+			print("file type:{0}".format(type(myfile)))
+			print("file attribute: {0}".format(myfile.__dict__))
+			print("file.file attributes:{0}".format(myfile.file.__dict__))
+			photo = Photo()
+			photo.stream_belong = stream
+			photo.data.save(myfile.name, myfile)
+			photo.save()
+		return redirect('gallery', stream_id=stream.id)
 
 
 
