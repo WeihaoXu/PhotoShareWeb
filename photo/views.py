@@ -142,7 +142,6 @@ class Gallery(View):
 	def get(self, request, stream_id):
 		stream = Stream.objects.get(pk=stream_id)
 		stream_photos = Photo.objects.filter(stream_belong=stream) 
-		print(stream_photos)
 		upload_img_form = UploadImgForm()
 		context = {
 			'user': request.user,
@@ -158,9 +157,6 @@ class Gallery(View):
 			return redirect('login')
 		stream = Stream.objects.get(pk=stream_id)
 		for myfile in request.FILES.getlist('files'):
-			print("file type:{0}".format(type(myfile)))
-			print("file attribute: {0}".format(myfile.__dict__))
-			print("file.file attributes:{0}".format(myfile.file.__dict__))
 			photo = Photo()
 			photo.stream_belong = stream
 			photo.data.save(myfile.name, myfile)

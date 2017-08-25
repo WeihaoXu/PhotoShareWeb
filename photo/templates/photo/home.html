@@ -23,11 +23,18 @@
 	<div class="row text-center text-lg-left">
 	<h2> Your Streams </h2>
 	{% for stream in user_streams %}	
+	<!--
 		<div class="col-lg-3 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream.pk %}" class="d-block mb-4 h-100">
 				<img class="img-fluid img-thumbnail" src={{stream.cover_img.url}} alt="">
 			</a>
 		</div>
+	-->
+
+		<div class="col-lg-3 col-md-4 col-xs-6">
+			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')"> </a>
+		</div>
+
 	{% endfor %}
 	</div>
 

@@ -27,17 +27,98 @@
 		</div>
 	</form>
 	<input type='submit' class="btn btn-primary btn-block dropzone-submit" id="shit" value="upload">
+
+	<br>
+
+	<ul class="list-inline text-center text-lg-left">
+		{% for photo in photos %}	
+		<li data-toggle="modal" data-target="#myModal">
+			<a href="#carousel-gallery" data-slide-to="0">
+				<img class="thumb" src="{{photo.data.url}}">
+				<br>Caption
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+	<!--end of thumbnails-->
+
+
+<!-- original thumbnail images.
 	<div class="row text-center text-lg-left">
 	{% for photo in photos %}	
+
 		<div class="col-lg-3 col-md-4 col-xs-6">
-			<a href="#" class="d-block mb-4 h-100">
-				<img class="img-fluid img-thumbnail" src={{photo.data.url}} alt="">
-			</a>
+			<a href="#" class="thumb" id="thumb" style="background-image: url('{{photo.data.url}}')"> </a>
 		</div>
+
 	{% endfor %}
 	</div>
+-->
 
+	<!--begin modal window. (wrapped around carousel library)-->
+	<div class="modal fade" id="myModal">
+	<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	<div class="modal-header">
+	<div class="pull-left">My Gallery Title</div>
+	<button type="button" class="close" data-dismiss="modal" title="Close"> <span class="glyphicon glyphicon-remove"></span></button>
+	</div>
+	<div class="modal-body">
+
+
+	<!-- carousel --> 
+	<div id="carousel-gallery" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#carousel-gallery" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-gallery" data-slide-to="1"></li>
+			<li data-target="#carousel-gallery" data-slide-to="2"></li>
+		</ol>
+	 
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			{% for photo in photos %}
+			{% if forloop.first %}
+			<div class="item active">
+				<img class="detailed-img" src="{{photo.data.url}}" alt="...">
+					<div class="carousel-caption">
+						<h3>Caption Text</h3>
+					</div>
+			</div>
+			{% else %}
+			<div class="item">
+				<img class="detailed-img" src="{{photo.data.url}}" alt="...">
+				<div class="carousel-caption">
+					<h3>Caption Text</h3>
+				</div>
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+	 
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#carousel-gallery" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-gallery" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	  </a>
+	</div> <!-- Carousel -->
+	<!-- end carousel -->
+
+
+	<!--end modal-body--></div>
+	<div class="modal-footer">
+	<div class="pull-left">
+	<small> place holder </small>
+	</div>
+	<button class="btn-sm close" type="button" data-dismiss="modal">Close</button>
+	<!--end modal-footer--></div>
+	<!--end modal-content--></div>
+	<!--end modal-dialoge--></div>
+	<!--end myModal--></div>
 
 </div>
+<!-- end container-fluid-->
 	
 {% endblock %}
