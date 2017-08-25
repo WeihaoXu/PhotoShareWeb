@@ -26,7 +26,11 @@
 			{{form.as_p}}
 		</div>
 	</form>
+	<!-- wanna add the submit button dynamically with javascript
 	<input type='submit' class="btn btn-primary btn-block dropzone-submit" id="shit" value="upload">
+	-->
+	<div id="img-submit">
+	</div>
 
 	<br>
 
@@ -80,14 +84,14 @@
 			{% for photo in photos %}
 			{% if forloop.first %}
 			<div class="item active">
-				<img class="detailed-img" src="{{photo.data.url}}" alt="...">
+				<img class="detailed-img center-block" src="{{photo.data.url}}" alt="...">
 					<div class="carousel-caption">
 						<h3>Caption Text</h3>
 					</div>
 			</div>
 			{% else %}
 			<div class="item">
-				<img class="detailed-img" src="{{photo.data.url}}" alt="...">
+				<img class="detailed-img center-block" src="{{photo.data.url}}" alt="...">
 				<div class="carousel-caption">
 					<h3>Caption Text</h3>
 				</div>
@@ -105,7 +109,6 @@
 	  </a>
 	</div> <!-- Carousel -->
 	<!-- end carousel -->
-
 
 	<!--end modal-body--></div>
 	<div class="modal-footer">
