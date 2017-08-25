@@ -1,12 +1,32 @@
-{% extends 'photo/base.html' %}
+{% load staticfiles %}
+<html>
+<head>
+	<title> share the world! </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-{% block title %}
-<title> home </title>
-{% endblock %}
+	<!-- Customized Styles -->
+	<link rel="stylesheet" href="{% static 'photo/css/main.css' %}">
 
-{% block content %}
-<div class="container-fluid">
-	<h1>	you are welcome to share your photos here! </h1>	
-</div>
-{% endblock %}
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+
+<body id='welcome-page-body'> 
+		<div class= 'welcome-buttons'>
+				<p><a href="{% url 'login' %}" class='btn btn-primary welcome-btn '> Login </a></p>
+				<p><a href="{% url 'signup' %}" class='btn btn-success welcome-btn '> Sign Up </a></p>
+				<p><a href="{% url 'home' %}" class='btn btn-info welcome-btn '> Stranger  </a></p>
+		</div>
+</body>
+
+</html>
