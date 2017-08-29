@@ -44,8 +44,8 @@
 				<a class="navbar-brand" href="{% url 'home' %}"> Gallery </a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"> <a href="#"> Home </a></li>
-				<li><a href="#"> Moments </a></li>
+				<li class="active"> <a href="{% url 'home' %}"> Home </a></li>
+				<li><a href="{% url 'moments' %}"> moments </a></li>
 			</ul>
 
 			{% if not user.is_authenticated %}

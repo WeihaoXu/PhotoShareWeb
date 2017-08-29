@@ -36,8 +36,8 @@
     border: 3px solid #c99;
     background-position: center center;
     background-size: cover;
+	overflow: hide;
 }
-
 
 
 html,body{height:100%;}

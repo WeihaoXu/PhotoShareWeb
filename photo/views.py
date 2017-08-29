@@ -22,11 +22,9 @@ class Home(View):
 			return redirect('login')
 		user = request.user	
 		user_streams = Stream.objects.filter(owner=user) # shouldn't use get here. Get is to get an individual object.
-		shared_streams = Stream.objects.filter(is_public=True).exclude(owner=user)
 		context = {
 			'user': user,
 			'user_streams': user_streams,
-			'shared_streams': shared_streams,
 			
 		} 
 		return render(request, 'photo/home.html', context)
@@ -92,7 +90,6 @@ class CreateStream(View):
 		if(not validate_user(request)):
 			return redirect('login')	
 
-
 		create_stream_home = CreateStreamForm()
 		context = {
 			"user": request.user,
@@ -142,12 +139,14 @@ class Gallery(View):
 	def get(self, request, stream_id):
 		stream = Stream.objects.get(pk=stream_id)
 		stream_photos = Photo.objects.filter(stream_belong=stream) 
+		indexes = range(len(stream_photos))
 		upload_img_form = UploadImgForm()
 		context = {
 			'user': request.user,
 			'stream': stream,
 			'form': upload_img_form,
 			'photos': stream_photos,
+			'indexes': indexes,
 		}
 		return render(request, 'photo/gallery.html', context=context)
 		#return HttpResponse("get stream id {0}".format(stream_id))
@@ -164,13 +163,17 @@ class Gallery(View):
 		return redirect('gallery', stream_id=stream.id)
 
 
-
-#class CreateStream(request):
-#	def get(request):
-#		if(not validate_user(request)):
-#			return redirect('login')
-		
-		
+class Moments(View):
+	def get(self, request):	
+		if(validate_user(request)):
+			shared_streams = Stream.objects.filter(is_public=True).exclude(owner=request.user)
+		else:
+			shared_streams = Stream.objects.filter(is_public=True)
+		context={
+			'user': request.user,
+			'shared_streams': shared_streams,
+		}
+		return render(request, 'photo/moments.html', context)	
 		
 	
 
