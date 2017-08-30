@@ -165,10 +165,7 @@ class Gallery(View):
 
 class Moments(View):
 	def get(self, request):	
-		if(validate_user(request)):
-			shared_streams = Stream.objects.filter(is_public=True).exclude(owner=request.user)
-		else:
-			shared_streams = Stream.objects.filter(is_public=True)
+		shared_streams = Stream.objects.filter(is_public=True)
 		context={
 			'user': request.user,
 			'shared_streams': shared_streams,
