@@ -1,0 +1,63 @@
+#welcome-page-body{
+	margin: 0;
+	padding: 0;
+	background: url(http://s1.picswalls.com/wallpapers/2015/12/12/beautiful-backgrounds_12441478_294.jpg);
+	background-size: 100%;
+}
+
+
+.welcome-buttons{
+	position: absolute;
+	top: 45%;
+	left: 45%;
+	text-align: center;
+}
+
+.welcome-btn{
+	background-color: transparent;
+	width: 150;
+	height: 30px;
+	margin: 10px;
+
+
+}
+
+
+.preview-img{
+	width: 50px;
+	height: 50px;
+}
+
+.thumb {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    border: 3px solid #c99;
+    background-position: center center;
+    background-size: cover;
+	overflow: hide;
+}
+
+
+html,body{height:100%;}
+
+.carousel,.item,.active{height:100%;}
+
+.carousel-inner{height:100%;}
+
+.detailed-img {
+	height: 512px; 
+	max-height: 512px;
+	width: auto;
+}
+
+
+
+
+
+
+
+
+
+
