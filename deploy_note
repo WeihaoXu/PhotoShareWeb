@@ -1,0 +1,7 @@
+To run the web, you need to:
+1. Make sure nginx is started and listening to 8001 port. If not, execute:
+    sudo service nginx restart
+2. Run uwsgi configured with ini file(with correct python version). Run:
+    uwsgi --ini photo.ini --pidfile photo.pid
+3. To stop the service, run:
+    uwsgi --stop photo.pid
