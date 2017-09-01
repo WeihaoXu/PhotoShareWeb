@@ -12,12 +12,31 @@ Dropzone.options.myAwesomeDropzone = {
 	autoProcessQueue: false,
 	dictCancelUpload: "Cancel",
 	init:function(){
+		this.on('addedfile', function(file){
+			if($('.dropzone-submit').length === 0){ //prevent duplicate
+				$('#img-submit').append("<input type='submit' class='btn btn-primary btn-block dropzone-submit' value='upload'>");
+			}
+			$('.img-submit').hide().show(0);
+
+			// have to register for the button after it's created.
+			$(".dropzone-submit").click(function(){
+				var myDropzone = Dropzone.forElement(".dropzone");
+				myDropzone.processQueue();
+			});
+		});
+
+		/*
 		$(".dropzone-submit").click(function(){
+			alert("clicked");
 			var myDropzone = Dropzone.forElement(".dropzone");
 			myDropzone.processQueue();
 		});
-		this.on('complete', function(){
-			this.removeAllFiles();			
+
+		*/
+
+		this.on('completemultiple', function(){
+			var myDropzone = Dropzone.forElement(".dropzone");
+			myDropzone.removeAllFiles();			
 		});
 	},
 	/*

@@ -19,21 +19,25 @@
 {% block content %}
 
 
-<div class="container-fluid">
+<div class="container">
 	<form action="{% url 'gallery' stream.id  %}" class="dropzone" id="my-awesome-dropzone">
 		{% csrf_token %}
 		<div class="fallback">
 			{{form.as_p}}
 		</div>
 	</form>
+	<!-- wanna add the submit button dynamically with javascript
 	<input type='submit' class="btn btn-primary btn-block dropzone-submit" id="shit" value="upload">
+	-->
+	<div id="img-submit">
+	</div>
 
 	<br>
 
-	<ul class="list-inline text-center text-lg-left">
+	<ul class="list-inline  text-lg-left" style="justify-content: space-between;">
 		{% for photo in photos %}	
-		<li data-toggle="modal" data-target="#myModal">
-			<a href="#carousel-gallery" data-slide-to="0">
+		<li data-toggle="modal" data-target="#myModal" class="text-center">
+			<a href="#carousel-gallery" data-slide-to="{{ forloop.counter0 }}">
 				<img class="thumb" src="{{photo.data.url}}">
 				<br>Caption
 			</a>
@@ -43,24 +47,21 @@
 	<!--end of thumbnails-->
 
 
-<!-- original thumbnail images.
-	<div class="row text-center text-lg-left">
-	{% for photo in photos %}	
-
-		<div class="col-lg-3 col-md-4 col-xs-6">
-			<a href="#" class="thumb" id="thumb" style="background-image: url('{{photo.data.url}}')"> </a>
-		</div>
-
-	{% endfor %}
-	</div>
--->
 
 	<!--begin modal window. (wrapped around carousel library)-->
 	<div class="modal fade" id="myModal">
 	<div class="modal-dialog modal-lg">
 	<div class="modal-content">
 	<div class="modal-header">
-	<div class="pull-left">My Gallery Title</div>
+	<div class="pull-left">
+		<div class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#"> actions <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li> delete </li>
+				<li> comment </li>
+			</ul>
+		</div>
+	</div>
 	<button type="button" class="close" data-dismiss="modal" title="Close"> <span class="glyphicon glyphicon-remove"></span></button>
 	</div>
 	<div class="modal-body">
@@ -70,9 +71,13 @@
 	<div id="carousel-gallery" class="carousel slide" data-ride="carousel">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
-			<li data-target="#carousel-gallery" data-slide-to="0" class="active"></li>
-			<li data-target="#carousel-gallery" data-slide-to="1"></li>
-			<li data-target="#carousel-gallery" data-slide-to="2"></li>
+			{% for index in indexes %}
+			{% if forloop.first  %}
+			<li data-target="#carousel-gallery" data-slide-to="{{ index }}" class="active"></li>
+			{% else  %}
+			<li data-target="#carousel-gallery" data-slide-to="{{ index }}"></li>
+			{% endif %}
+			{% endfor %}
 		</ol>
 	 
 		<!-- Wrapper for slides -->
@@ -80,14 +85,14 @@
 			{% for photo in photos %}
 			{% if forloop.first %}
 			<div class="item active">
-				<img class="detailed-img" src="{{photo.data.url}}" alt="...">
+				<img class="detailed-img center-block" src="{{photo.data.url}}" alt="...">
 					<div class="carousel-caption">
 						<h3>Caption Text</h3>
 					</div>
 			</div>
 			{% else %}
 			<div class="item">
-				<img class="detailed-img" src="{{photo.data.url}}" alt="...">
+				<img class="detailed-img center-block" src="{{photo.data.url}}" alt="...">
 				<div class="carousel-caption">
 					<h3>Caption Text</h3>
 				</div>
@@ -106,12 +111,12 @@
 	</div> <!-- Carousel -->
 	<!-- end carousel -->
 
-
 	<!--end modal-body--></div>
 	<div class="modal-footer">
-	<div class="pull-left">
+	<div class="pull-right">
+	<!--
 	<small> place holder </small>
-	</div>
+	-->
 	<button class="btn-sm close" type="button" data-dismiss="modal">Close</button>
 	<!--end modal-footer--></div>
 	<!--end modal-content--></div>

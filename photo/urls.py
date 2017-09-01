@@ -10,6 +10,6 @@ urlpatterns = [
 	url(r'^login/',  views.Login.as_view(), name='login'),
 	url(r'^logout/', views.Logout.as_view(), name='logout'),
 	url(r'^create_stream/', views.CreateStream.as_view(), name='create_stream'),
-#	url(r'^upload/', views.UploadImg.as_view(), name='upload'),
 	url(r'^gallery/(?P<stream_id>[0-9]+)$', views.Gallery.as_view(), name='gallery'), 
+	url(r'^moments/', views.Moments.as_view(), name='moments'),
 ]

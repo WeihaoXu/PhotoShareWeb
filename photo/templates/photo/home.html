@@ -21,7 +21,6 @@
 
 
 	<div class="row text-center text-lg-left">
-	<h2> Your Streams </h2>
 	{% for stream in user_streams %}	
 	<!--
 		<div class="col-lg-3 col-md-4 col-xs-6">
@@ -32,28 +31,16 @@
 	-->
 
 		<div class="col-lg-3 col-md-4 col-xs-6">
-			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')"> </a>
+			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
+			<br>
+			<a href="{% url 'gallery' stream.pk %}"> {{ stream.name }} </a>
 		</div>
 
 	{% endfor %}
 	</div>
 
-	<br>
-	<br>
 
 
-
-	<!-- render all the public streams here  -->
-	<div class="row text-center text-lg-left">
-	<h2> Shared Streams <p>
-	{% for stream in shared_streams %}	
-		<div class="col-lg-3 col-md-4 col-xs-6">
-			<a href="#" class="d-block mb-4 h-100">
-				<img class="img-fluid img-thumbnail" src={{stream.cover_img.url}}  alt="">
-			</a>
-		</div>
-	{% endfor %}
-	</div>
 </div>
 
 {% endblock %}

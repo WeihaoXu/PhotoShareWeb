@@ -137,10 +137,13 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'photo/static'),
 )
 
-
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/' 
+
+# added by weihao when trying manage.py deploy
+ALLOWED_HOSTS = ['weihao1994.com', 'localhost', '127.0.0.1']
