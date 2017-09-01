@@ -10,6 +10,7 @@
 	-->
 	<script type="text/javascript" src="../../static/photo/js/dropzone.js"> </script>
 	<script type="text/javascript" src="../../static/photo/js/dropzone_config.js"></script>
+	<script type="text/javascript" src="../../static/photo/js/hover_display.js"></script>
 {% endblock %}
 
 {% block styles %}
@@ -36,13 +37,23 @@
 
 	<br>
 
-	<ul class="list-inline  text-lg-left" style="justify-content: space-between;">
+	<!-- thumbnails -->
+	<ul class="list-inline  text-lg-left" style="justify-content: space-between; padding-bottom: 80px;">
 		{% for photo in photos %}	
-		<li data-toggle="modal" data-target="#myModal" class="text-center">
+		<li data-toggle="modal" data-target="#myModal" class="my-hover-control text-center">
 			<a href="#carousel-gallery" data-slide-to="{{ forloop.counter0 }}">
 				<img class="thumb" src="{{photo.data.url}}">
-				<br>Caption
+				<br>
 			</a>
+
+			<div class="dropdown my-hover-display">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> actions <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li> <p> delete </p></li>
+					<li> comment </li>
+				</ul>
+			</div>
+
 		</li>
 		{% endfor %}
 	</ul>
@@ -89,14 +100,14 @@
 			<div class="item active">
 				<img class="detailed-img center-block" src="{{photo.data.url}}" alt="...">
 					<div class="carousel-caption">
-						<h3>Caption Text</h3>
+						<h3></h3>
 					</div>
 			</div>
 			{% else %}
 			<div class="item">
 				<img class="detailed-img center-block" src="{{photo.data.url}}" alt="...">
 				<div class="carousel-caption">
-					<h3>Caption Text</h3>
+					<h3></h3>
 				</div>
 			</div>
 			{% endif %}

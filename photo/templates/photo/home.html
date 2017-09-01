@@ -5,6 +5,12 @@
 
 {% endblock %}
 
+{% block scripts %}
+<!--
+<script type="text/javascript" src="../../static/photo/js/hover_display.js"></script>
+-->
+{% endblock %}
+
 {% block content %}
 <div class="container">
 	{% if user.is_authenticated %}
@@ -22,18 +28,15 @@
 
 	<div class="row text-center text-lg-left">
 	{% for stream in user_streams %}	
-	<!--
-		<div class="col-lg-3 col-md-4 col-xs-6">
-			<a href="{% url 'gallery' stream.pk %}" class="d-block mb-4 h-100">
-				<img class="img-fluid img-thumbnail" src={{stream.cover_img.url}} alt="">
-			</a>
-		</div>
-	-->
-
 		<div class="col-lg-3 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
-			<br>
-			<a href="{% url 'gallery' stream.pk %}"> {{ stream.name }} </a>
+			<div class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li> delete </li>
+					<li> comment </li>
+				</ul>
+			</div>
 		</div>
 
 	{% endfor %}
