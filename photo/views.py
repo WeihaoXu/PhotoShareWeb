@@ -135,18 +135,21 @@ class UploadImg(View):
 		return HttpResponse('photo upload successful') 
 """
 
+# Display the photos in a photo stream. Upload button for the owner.
 class Gallery(View):
 	def get(self, request, stream_id):
 		stream = Stream.objects.get(pk=stream_id)
 		stream_photos = Photo.objects.filter(stream_belong=stream) 
 		indexes = range(len(stream_photos))
 		upload_img_form = UploadImgForm()
+		is_owner = (request.user.pk == stream.owner.pk)
 		context = {
 			'user': request.user,
 			'stream': stream,
 			'form': upload_img_form,
 			'photos': stream_photos,
 			'indexes': indexes,
+			'is_owner': is_owner,
 		}
 		return render(request, 'photo/gallery.html', context=context)
 		#return HttpResponse("get stream id {0}".format(stream_id))
