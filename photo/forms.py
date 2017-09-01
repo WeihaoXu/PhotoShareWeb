@@ -24,7 +24,7 @@ class CreateStreamForm(forms.Form):
 	description = forms.CharField(widget=forms.Textarea)
 	cover = forms.ImageField()
 	cover.label = "Cover Image"
-	public = forms.BooleanField()
+	public = forms.BooleanField(initial=True, required=False)
 
 
 

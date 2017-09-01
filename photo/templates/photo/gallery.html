@@ -20,17 +20,19 @@
 
 
 <div class="container">
+	{% if is_owner %}
+	<!-- dropzone upload -->
 	<form action="{% url 'gallery' stream.id  %}" class="dropzone" id="my-awesome-dropzone">
 		{% csrf_token %}
 		<div class="fallback">
 			{{form.as_p}}
 		</div>
 	</form>
-	<!-- wanna add the submit button dynamically with javascript
-	<input type='submit' class="btn btn-primary btn-block dropzone-submit" id="shit" value="upload">
-	-->
+	<!-- add submit button dynamically with javascript -->
 	<div id="img-submit">
 	</div>
+	<!-- end dropzone upload -->
+	{% endif %}
 
 	<br>
 
