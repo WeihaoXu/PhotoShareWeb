@@ -176,7 +176,19 @@ class Moments(View):
 		return render(request, 'photo/moments.html', context)	
 		
 	
+class DeletePhoto(View):
+	def get(self, request, photo_id, stream_id):
+		# in order to redirect to the gallery page, cache might be used. Research it later.
+		Photo.objects.get(pk=photo_id).delete()
+		return redirect('gallery', stream_id=stream_id)
+		#return HttpResponse("delete request of {} received".format(photo_id))
 
+class DeleteStream(View):
+	def get(self, request, stream_id):
+		Stream.objects.get(pk=stream_id).delete()
+		return redirect('home')
+		
+		
 		
 
 		

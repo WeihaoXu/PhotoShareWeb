@@ -33,7 +33,7 @@
 			<div class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li> delete </li>
+					<li> <a href="{% url 'delete_stream' stream_id=stream.pk %}"> delete </a></li>
 					<li> comment </li>
 				</ul>
 			</div>
