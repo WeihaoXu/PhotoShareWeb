@@ -187,23 +187,16 @@ class DeleteStream(View):
 	def get(self, request, stream_id):
 		Stream.objects.get(pk=stream_id).delete()
 		return redirect('home')
-		
-		
-		
 
-		
-
-	
-		
-	
-
-
-
-
-
-
-
-
-
-
-
+class SubscribeStream(View):
+	def get(self, request, stream_id):
+		if(not validate_user(request)):
+			return redirect('login')
+		s = Stream.objects.get(pk=stream_id)
+		subscribers = s.subscribers.filter(pk=request.user.pk)
+		if(len(subscribers) == 0):
+			s.subscribers.add(request.user)
+		else:
+			# alert "already subscribed"
+			None
+		return redirect('moments')

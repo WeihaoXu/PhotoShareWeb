@@ -49,8 +49,10 @@
 			<div class="dropdown my-hover-display">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> actions <span class="caret"></span></a>
 				<ul class="dropdown-menu">
+					{% if is_owner  %}
 					<li> <a href="{% url "delete_photo" photo_id=photo.pk stream_id=stream.id %}"> delete </a></li>
-					<li> comment </li>
+					{% endif %}
+					<li> <a href="#"> comment </a>  </li>
 				</ul>
 			</div>
 

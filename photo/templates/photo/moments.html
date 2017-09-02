@@ -11,8 +11,35 @@
 		<div class="col-lg-3 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream_id=stream.pk %}" class="d-block mb-4 h-100">
 				<img class="thumb " src={{stream.cover_img.url}}  alt="">
+				<!--
 				<div> {{stream.name}} </div>
+				-->
 			</a>
+
+			<div class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <br> by {{stream.owner.username}} <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li> <a href="{% url 'subscribe_stream' stream_id=stream.pk %}"> Subscribe </a></li>
+
+					{% if stream.owner.pk == user.pk %}
+					<li> <a href="{% url 'delete_stream' stream_id=stream.pk %}"> Delete </a></li>
+					{% endif %}
+
+
+
+
+
+
+
+					<!-- add comment function later
+					<li> comment </li>
+					-->
+				</ul>
+			</div>
+
+
+
+
 		</div>
 	{% endfor %}
 	</div>
