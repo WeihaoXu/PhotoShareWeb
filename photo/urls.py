@@ -15,4 +15,5 @@ urlpatterns = [
 	url(r'^delete_photo/(?P<photo_id>[0-9]+)/(?P<stream_id>[0-9]+)$', views.DeletePhoto.as_view(), name='delete_photo'),
 	url(r'^delete_stream/(?P<stream_id>[0-9]+)$', views.DeleteStream.as_view(), name='delete_stream'),
 	url(r'^subscribe_stream/(?P<stream_id>[0-9]+)$', views.SubscribeStream.as_view(), name='subscribe_stream'),
+	url(r'^unsubscribe_stream/(?P<stream_id>[0-9]+)$', views.UnsubscribeStream.as_view(), name='unsubscribe_stream'),
 ]

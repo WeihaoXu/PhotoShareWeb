@@ -13,20 +13,10 @@
 
 {% block content %}
 <div class="container">
-	{% if user.is_authenticated %}
-		<div class="row">
-			<div class="col-lg-3 col-md-4 col-xs-6">
-				<a href="{% url 'create_stream' %}" class="btn btn-primary"> Create Stream </a>
-			</div>
-		</div>
-		
-		<br>
-	{% endif %}
-
+	<h1 class='text-center'> Your Streams </h1>
+	
+	<div class="row text-center text-lg-center">
 	<!-- render all the user's streams here -->
-
-
-	<div class="row text-center text-lg-left">
 	{% for stream in user_streams %}	
 		<div class="col-lg-3 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
@@ -40,9 +30,41 @@
 				</ul>
 			</div>
 		</div>
+	{% endfor %}
+	<!-- end render streams -->
+	
+	<!-- create_stream button -->
+	<div class="col-lg-3 col-md-4 col-xs-6">
+		<a href="{% url 'create_stream'  %}" class="thumb" style="background-image: url('')">  </a>
+	</div>
 
+	</div>
+
+
+
+	<h1 class='text-center'> Subscribed </h1>
+	<div class="row text-center text-lg-center">
+	{% for stream in subscribed_streams %}
+		<div class="col-lg-3 col-md-4 col-xs-6">
+			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
+			<div class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li> <a href="{% url 'unsubscribe_stream' stream_id=stream.pk %}"> Unsubscribe </a></li>
+					{% if stream.owner.pk == user.pk %}
+					<li> <a href="{% url 'unsubscribe_stream' stream_id=stream.pk %}"> Delete </a></li>
+					{% endif %}
+					<!-- add comment function later
+					<li> comment </li>
+					-->
+				</ul>
+			</div>
+		</div>
 	{% endfor %}
 	</div>
+	<br>
+	<br>
+	<br>
 
 
 

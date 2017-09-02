@@ -22,9 +22,11 @@ class Home(View):
 			return redirect('login')
 		user = request.user	
 		user_streams = Stream.objects.filter(owner=user) # shouldn't use get here. Get is to get an individual object.
+		subscribed_streams = Stream.objects.filter(subscribers=user)
 		context = {
 			'user': user,
 			'user_streams': user_streams,
+			'subscribed_streams': subscribed_streams,
 			
 		} 
 		return render(request, 'photo/home.html', context)
@@ -112,28 +114,6 @@ class CreateStream(View):
 			return redirect('home')
 		else:
 			return HttpResponse("create stream form invalid!")
-"""
-class UploadImg(View):
-	def get(self, request):
-		if(not validate_user(request)):
-			return redirect('login') 
-		form = UploadImgForm()
-		context = {
-			'user': request.user,
-			'form': form,
-		}
-		return render(request, 'photo/upload_img.html', context);
-
-	def post(self, request):
-		if(not validate_user(request)):
-			return HttpResponse('not logged error!')	
-		form = UploadImgForm(request.POST, request.FILES)
-		if(form.is_valid()):
-			photo = Photo(data = request.FILES['data'])
-			photo.name = request.POST['name']
-			photo.save()
-		return HttpResponse('photo upload successful') 
-"""
 
 # Display the photos in a photo stream. Upload button for the owner.
 class Gallery(View):
@@ -200,3 +180,23 @@ class SubscribeStream(View):
 			# alert "already subscribed"
 			None
 		return redirect('moments')
+
+class UnsubscribeStream(View):
+	def get(self, request, stream_id):
+		if(not validate_user(request)):
+			return redirect('login')
+		s = Stream.objects.get(pk=stream_id)
+		s.subscribers.remove(request.user)
+		return redirect('home')
+
+
+
+
+
+
+
+
+
+
+
+
