@@ -4,13 +4,24 @@
 <title> login </title>
 {% endblock %}
 
+{% block styles %}
+      <link rel="stylesheet" href="../../static/photo/css/form.css">
+{% endblock %}
 
 {% block content %}
 
-<form method = 'post' action = {% url 'login' %}>
-	{% csrf_token %}
-	{{ form.as_p }}
-	<button type='submit'> Login </button>
-</form>
+<div class='container'>
+	{% load bootstrap3 %}
+	<form action="{% url 'login' %}" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				Login 
+			</button>
+		{% endbuttons %}
+	</form>
+</div>
+
 
 {% endblock %}

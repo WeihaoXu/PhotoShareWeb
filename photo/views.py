@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 #from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -36,8 +37,6 @@ class Signup(View):
 		form = SignUpForm(request.POST)
 		if form.is_valid():
 			user = form.save() # user saved. post_save signal sent. Profile created.
-			user.refresh_from_db() #reloads user from db. Profile loaded.
-			user.profile.birth_date = form.cleaned_data.get('birth_date')
 			user.save()
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=user.username, password=raw_password)
@@ -45,8 +44,8 @@ class Signup(View):
 			context = {
 				'user': request.user 
 			}
-			return render(request, 'photo/index.html', context)
-		return HttpResponse('form invalid')
+			return redirect('home')
+		return redirect('signup')
 	def get(self, request):
 		form = SignUpForm()
 		context = {
@@ -92,11 +91,12 @@ class CreateStream(View):
 		if(not validate_user(request)):
 			return redirect('login')	
 
-		create_stream_home = CreateStreamForm()
+		create_stream_form = CreateStreamForm()
 		context = {
 			"user": request.user,
-			"form": create_stream_home,	
+			"form": create_stream_form,	
 		}
+		print(create_stream_form.as_p())
 		return render(request, 'photo/create_stream.html', context)
 
 

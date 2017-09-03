@@ -5,10 +5,10 @@ from . import models
 
 
 class SignUpForm(UserCreationForm):
-	birth_date = forms.DateField(help_text='Format: YYY-MM-DD')
+	email = forms.EmailField(required=True) #override the permission.
 	class Meta:
 		model = User
-		fields = ('username', 'birth_date', 'password1', 'password2', 'email')
+		fields = ('username', 'password1', 'password2', 'email')
 
 # As for login form: meant to create user login form by myself. However, there is existing AuthenticationFrom and I can just use that for login. 
 # See doc at: https://docs.djangoproject.com/en/1.8/modules/django/contrib/auth/forms/
