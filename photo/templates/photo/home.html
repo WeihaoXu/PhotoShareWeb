@@ -12,13 +12,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
 	<h1 class='text-center'> Your Streams </h1>
 	
 	<div class="row text-center text-lg-center">
 	<!-- render all the user's streams here -->
 	{% for stream in user_streams %}	
-		<div class="col-lg-3 col-md-4 col-xs-6">
+		<div class="col-lg-2 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
 			<div class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <span class="caret"></span></a>
@@ -34,8 +34,8 @@
 	<!-- end render streams -->
 	
 	<!-- create_stream button -->
-	<div class="col-lg-3 col-md-4 col-xs-6">
-		<a href="{% url 'create_stream'  %}" class="thumb" style="background-image: url('')">  </a>
+	<div class="col-lg-2 col-md-4 col-xs-6">
+		<a href="{% url 'create_stream'  %}" class="thumb" style="background-image: url('../../static/photo/pics/create_stream_icon.png');">  </a>
 	</div>
 
 	</div>
@@ -45,7 +45,7 @@
 	<h1 class='text-center'> Subscribed </h1>
 	<div class="row text-center text-lg-center">
 	{% for stream in subscribed_streams %}
-		<div class="col-lg-3 col-md-4 col-xs-6">
+		<div class="col-lg-2 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
 			<div class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <span class="caret"></span></a>
