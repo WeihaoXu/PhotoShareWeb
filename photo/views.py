@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 #from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -34,8 +35,6 @@ class Signup(View):
 		form = SignUpForm(request.POST)
 		if form.is_valid():
 			user = form.save() # user saved. post_save signal sent. Profile created.
-			user.refresh_from_db() #reloads user from db. Profile loaded.
-			user.profile.birth_date = form.cleaned_data.get('birth_date')
 			user.save()
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=user.username, password=raw_password)
@@ -43,8 +42,8 @@ class Signup(View):
 			context = {
 				'user': request.user 
 			}
-			return render(request, 'photo/index.html', context)
-		return HttpResponse('form invalid')
+			return redirect('home')
+		return redirect('signup')
 	def get(self, request):
 		form = SignUpForm()
 		context = {
@@ -90,11 +89,12 @@ class CreateStream(View):
 		if(not validate_user(request)):
 			return redirect('login')	
 
-		create_stream_home = CreateStreamForm()
+		create_stream_form = CreateStreamForm()
 		context = {
 			"user": request.user,
-			"form": create_stream_home,	
+			"form": create_stream_form,	
 		}
+		print(create_stream_form.as_p())
 		return render(request, 'photo/create_stream.html', context)
 
 
@@ -112,28 +112,6 @@ class CreateStream(View):
 			return redirect('home')
 		else:
 			return HttpResponse("create stream form invalid!")
-"""
-class UploadImg(View):
-	def get(self, request):
-		if(not validate_user(request)):
-			return redirect('login') 
-		form = UploadImgForm()
-		context = {
-			'user': request.user,
-			'form': form,
-		}
-		return render(request, 'photo/upload_img.html', context);
-
-	def post(self, request):
-		if(not validate_user(request)):
-			return HttpResponse('not logged error!')	
-		form = UploadImgForm(request.POST, request.FILES)
-		if(form.is_valid()):
-			photo = Photo(data = request.FILES['data'])
-			photo.name = request.POST['name']
-			photo.save()
-		return HttpResponse('photo upload successful') 
-"""
 
 # Display the photos in a photo stream. Upload button for the owner.
 class Gallery(View):
@@ -166,24 +144,63 @@ class Gallery(View):
 		return redirect('gallery', stream_id=stream.id)
 
 
-class Moments(View):
+class Global(View):
 	def get(self, request):	
 		shared_streams = Stream.objects.filter(is_public=True)
 		context={
 			'user': request.user,
 			'shared_streams': shared_streams,
 		}
-		return render(request, 'photo/moments.html', context)	
-		
-	
+		return render(request, 'photo/global.html', context)	
+
+class Subscribed(View):
+	def get(self, request):
+		if(not validate_user(request)):
+			return redirect('login')
+		user = request.user	
+		subscribed_streams = Stream.objects.filter(subscribers=user)
+		context = {
+			'user': user,
+			'subscribed_streams': subscribed_streams,
+			
+		} 
+		return render(request, 'photo/subscribed.html', context)
 
 		
-
-		
-
 	
-		
-	
+class DeletePhoto(View):
+	def get(self, request, photo_id, stream_id):
+		# in order to redirect to the gallery page, cache might be used. Research it later.
+		Photo.objects.get(pk=photo_id).delete()
+		return redirect('gallery', stream_id=stream_id)
+		#return HttpResponse("delete request of {} received".format(photo_id))
+
+class DeleteStream(View):
+	def get(self, request, stream_id):
+		Stream.objects.get(pk=stream_id).delete()
+		return redirect('home')
+
+class SubscribeStream(View):
+	def get(self, request, stream_id):
+		if(not validate_user(request)):
+			return redirect('login')
+		s = Stream.objects.get(pk=stream_id)
+		subscribers = s.subscribers.filter(pk=request.user.pk)
+		if(len(subscribers) == 0):
+			s.subscribers.add(request.user)
+		else:
+			# alert "already subscribed"
+			None
+		return redirect('global')
+
+class UnsubscribeStream(View):
+	def get(self, request, stream_id):
+		if(not validate_user(request)):
+			return redirect('login')
+		s = Stream.objects.get(pk=stream_id)
+		s.subscribers.remove(request.user)
+		return redirect('home')
+
 
 
 

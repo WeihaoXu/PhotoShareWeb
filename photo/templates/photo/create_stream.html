@@ -2,16 +2,25 @@
 
 {% block title %}
 <title> create photo stream </title>
-
 {% endblock %}
 
+{% block styles %}
+{% endblock %}
 
 {% block content %}
 
-<form method='POST' action="{% url 'create_stream' %}" enctype='multipart/form-data'>
-	{% csrf_token %}
-	<p>
-		{{form.as_p}}	
-	</p>
-	<input type='submit' value='Create'>
+
+<div class='container'>
+	{% load bootstrap3 %}
+	<form action="{% url 'create_stream' %}" method="post" class="form" enctype='multipart/form-data'>
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				Create 
+			</button>
+		{% endbuttons %}
+	</form>
+</div>
+
 {% endblock %}

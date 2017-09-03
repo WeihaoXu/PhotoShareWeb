@@ -1,7 +1,7 @@
 {% extends 'photo/base.html' %}
 
 {% block title %}
-<title> home </title>
+<title> subscribe </title>
 
 {% endblock %}
 
@@ -14,14 +14,16 @@
 {% block content %}
 <div class="container-fluid">
 	<div class="row text-center text-lg-center">
-	<!-- render all the user's streams here -->
-	{% for stream in user_streams %}	
+	{% for stream in subscribed_streams %}
 		<div class="col-lg-2 col-md-4 col-xs-6">
 			<a href="{% url 'gallery' stream.pk %}" class="thumb" style="background-image: url('{{stream.cover_img.url}}')">  </a>
 			<div class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {{ stream.name }} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li> <a href="{% url 'delete_stream' stream_id=stream.pk %}"> delete </a></li>
+					<li> <a href="{% url 'unsubscribe_stream' stream_id=stream.pk %}"> Unsubscribe </a></li>
+					{% if stream.owner.pk == user.pk %}
+					<li> <a href="{% url 'unsubscribe_stream' stream_id=stream.pk %}"> Delete </a></li>
+					{% endif %}
 					<!-- add comment function later
 					<li> comment </li>
 					-->
@@ -29,14 +31,8 @@
 			</div>
 		</div>
 	{% endfor %}
-	<!-- end render streams -->
-	
-	<!-- create_stream button -->
-	<div class="col-lg-2 col-md-4 col-xs-6">
-		<a href="{% url 'create_stream'  %}" class="thumb" style="background-image: url('../../static/photo/pics/create_stream_icon.png');">  </a>
 	</div>
 
-	</div>
 
 </div>
 

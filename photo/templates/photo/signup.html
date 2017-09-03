@@ -4,12 +4,25 @@
 <title> sign up </title>
 {% endblock %}
 
+{% block styles %}
+      <link rel="stylesheet" href="../../static/photo/css/form.css">
+{% endblock %}
+
 {% block content %}
-<h2> Sign up </h2>
-<form method = "post" action={% url 'signup' %}>
-	{% csrf_token %}
-	<p> {{form.as_p}} </p>
-	<button type="submit"> sign up </button>
-</form>
+{% load bootstrap3 %}
+
+{# Display a form #}
+
+<div class='container'>
+	<form action="{% url 'signup' %}" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				 Submit
+			</button>
+		{% endbuttons %}
+	</form>
+</div>
 {% endblock %}
 
