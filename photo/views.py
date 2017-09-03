@@ -23,11 +23,9 @@ class Home(View):
 			return redirect('login')
 		user = request.user	
 		user_streams = Stream.objects.filter(owner=user) # shouldn't use get here. Get is to get an individual object.
-		subscribed_streams = Stream.objects.filter(subscribers=user)
 		context = {
 			'user': user,
 			'user_streams': user_streams,
-			'subscribed_streams': subscribed_streams,
 			
 		} 
 		return render(request, 'photo/home.html', context)
@@ -146,14 +144,28 @@ class Gallery(View):
 		return redirect('gallery', stream_id=stream.id)
 
 
-class Moments(View):
+class Global(View):
 	def get(self, request):	
 		shared_streams = Stream.objects.filter(is_public=True)
 		context={
 			'user': request.user,
 			'shared_streams': shared_streams,
 		}
-		return render(request, 'photo/moments.html', context)	
+		return render(request, 'photo/global.html', context)	
+
+class Subscribed(View):
+	def get(self, request):
+		if(not validate_user(request)):
+			return redirect('login')
+		user = request.user	
+		subscribed_streams = Stream.objects.filter(subscribers=user)
+		context = {
+			'user': user,
+			'subscribed_streams': subscribed_streams,
+			
+		} 
+		return render(request, 'photo/subscribed.html', context)
+
 		
 	
 class DeletePhoto(View):
@@ -179,7 +191,7 @@ class SubscribeStream(View):
 		else:
 			# alert "already subscribed"
 			None
-		return redirect('moments')
+		return redirect('global')
 
 class UnsubscribeStream(View):
 	def get(self, request, stream_id):

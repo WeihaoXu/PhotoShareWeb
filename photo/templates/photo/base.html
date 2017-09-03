@@ -46,11 +46,12 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="{% url 'home' %}"> Gallery </a>
+				<a class="navbar-brand" href="#"> Gallery </a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a href="{% url 'home' %}"> Home </a></li>
-				<li><a href="{% url 'moments' %}"> moments </a></li>
+				<li><a href="{% url 'subscribed' %}"> Subscribed </a></li>
+				<li><a href="{% url 'global' %}"> Global </a></li>
 			</ul>
 
 			{% if not user.is_authenticated %}
