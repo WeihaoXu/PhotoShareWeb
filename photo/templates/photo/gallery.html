@@ -40,11 +40,13 @@
 	<!-- thumbnails -->
 	<ul class="list-inline  text-lg-left" style="justify-content: space-between; padding-bottom: 80px;">
 		{% for photo in photos %}	
-		<li data-toggle="modal" data-target="#myModal" class="my-hover-control text-center">
-			<a href="#carousel-gallery" data-slide-to="{{ forloop.counter0 }}">
-				<img class="thumb" src="{{photo.data.url}}">
-				<br>
-			</a>
+		<li  class="my-hover-control text-center">
+			<div data-toggle="modal" data-target="#myModal">
+				<a href="#carousel-gallery" data-slide-to="{{ forloop.counter0 }}">
+					<img class="thumb" src="{{photo.data.url}}">
+					<br>
+				</a>
+			</div>
 
 			<div class="dropdown my-hover-display">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> actions <span class="caret"></span></a>
