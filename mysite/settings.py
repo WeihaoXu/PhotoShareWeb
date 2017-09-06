@@ -148,3 +148,4 @@ MEDIA_URL = '/media/'
 
 # added by weihao when trying manage.py deploy
 ALLOWED_HOSTS = ['weihao1994.com', 'localhost', '127.0.0.1']
+FILE_UPLOAD_PERMISSIONS=0o644
